@@ -6,7 +6,7 @@ export interface CleanedLink extends CleanedReport {
 }
 
 const HISTORY_LIMIT = 100;
-// Une même copie peut passer par plusieurs chemins (writeText, setData…) : on ne la compte qu'une fois.
+// A single copy can go through several paths (writeText, setData…): only count it once.
 const DEDUPE_MS = 2000;
 
 export const history = storage.defineItem<CleanedLink[]>('local:history', { fallback: [] });
@@ -22,7 +22,7 @@ export async function record(report: CleanedReport): Promise<void> {
   await cleanedCount.setValue((await cleanedCount.getValue()) + 1);
 }
 
-/** Vide l'historique ; le compteur, lui, reste un total depuis l'installation. */
+/** Clears the history; the counter stays a total since install. */
 export async function clearHistory(): Promise<void> {
   await history.setValue([]);
 }

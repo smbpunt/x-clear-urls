@@ -2,7 +2,7 @@ import { record } from '@/core/history';
 import { CLEANED_EVENT, parseReport } from '@/core/report';
 
 export default defineBackground(() => {
-  // Écritures sérialisées : plusieurs onglets peuvent signaler en même temps.
+  // Serialized writes: several tabs can report at the same time.
   let queue = Promise.resolve();
 
   browser.runtime.onMessage.addListener((message) => {

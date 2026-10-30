@@ -1,0 +1,43 @@
+name: New site or tracking param
+description: A link copied on a website still contains tracking params.
+labels: [rules]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Only the **desktop web** version of sites is supported: mobile apps often add params the website does not.
+  - type: input
+    id: site
+    attributes:
+      label: Site
+      placeholder: instagram.com
+    validations:
+      required: true
+  - type: input
+    id: action
+    attributes:
+      label: How was the link copied?
+      description: The button or menu used.
+      placeholder: '"..." menu on a post → "Copy link"'
+    validations:
+      required: true
+  - type: input
+    id: copied
+    attributes:
+      label: Copied link
+      description: Replace personal values if you want, but keep the param names.
+      placeholder: https://www.instagram.com/p/AbC123/?utm_source=ig_web_copy_link&igsh=...
+    validations:
+      required: true
+  - type: input
+    id: expected
+    attributes:
+      label: Expected clean link
+      placeholder: https://www.instagram.com/p/AbC123/
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Firefox 150

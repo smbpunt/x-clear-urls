@@ -1,8 +1,8 @@
 import { CLEANED_EVENT } from '@/core/report';
 import { toMatchPatterns } from '@/core/url';
-import { sites } from '@/sites';
+import { sites } from '@/core/sites';
 
-// Monde isolé : relaie au background les signalements du content script MAIN.
+// Isolated world: relays reports from the MAIN content script to the background.
 export default defineContentScript({
   matches: sites.flatMap((site) => toMatchPatterns(site.hosts)),
   runAt: 'document_start',

@@ -1,18 +1,18 @@
 import { CLEANED_EVENT } from '@/core/report';
 import type { Site } from '@/core/types';
 import { cleanText, findSite, toMatchPatterns } from '@/core/url';
-import { sites } from '@/sites';
+import { sites } from '@/core/sites';
 
 export default defineContentScript({
   matches: sites.flatMap((site) => toMatchPatterns(site.hosts)),
-  // Monde MAIN : nécessaire pour remplacer les API de la page (presse-papier, etc.).
+  // MAIN world: required to replace the page's APIs (clipboard, etc.).
   world: 'MAIN',
   runAt: 'document_start',
   main() {
     const site = findSite(sites, location.hostname);
     if (!site) return;
 
-    // Pas d'API `browser` dans le monde MAIN : le bridge relaie au background.
+    // No `browser` API in the MAIN world: the bridge relays to the background.
     const report = (original: string, cleaned: string, { id }: Site) =>
       window.dispatchEvent(
         new CustomEvent(CLEANED_EVENT, { detail: JSON.stringify({ site: id, original, cleaned }) }),

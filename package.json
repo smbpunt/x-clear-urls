@@ -1,8 +1,13 @@
 {
   "name": "x-clear-urls",
-  "description": "X-Clear-URLs browser extension",
+  "description": "Browser extension that strips tracking parameters from links you copy.",
   "private": true,
   "version": "0.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smbpunt/x-clear-urls.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -12,6 +17,7 @@
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
     "compile": "tsc --noEmit",
+    "test": "vitest run",
     "icons": "node scripts/render-icons.mjs public/icon",
     "postinstall": "wxt prepare"
   },
@@ -19,6 +25,7 @@
     "sharp": "^0.35.5",
     "typescript": "^5.9.3",
     "vite": "^8.1.5",
+    "vitest": "^5.0.5",
     "web-ext": "^10.5.0",
     "wxt": "^0.21.3"
   }

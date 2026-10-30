@@ -1,6 +1,6 @@
 import type { Site } from './types';
 
-// S'arrête avant la ponctuation finale : « voir https://x.com/…/1?a=b. »
+// Stops before trailing punctuation: "see https://x.com/…/1?a=b."
 const URL_IN_TEXT = /https?:\/\/[^\s<>"'`]*[^\s<>"'`.,;:!?)\]}]/g;
 
 export function hostMatches(hostname: string, hosts: string[]): boolean {
@@ -11,13 +11,20 @@ export function findSite(sites: Site[], hostname: string): Site | undefined {
   return sites.find((site) => hostMatches(hostname, site.hosts));
 }
 
-/** `*.host` couvre aussi le domaine nu dans les match patterns. */
+/** In match patterns, `*.host` also covers the bare domain. */
 export function toMatchPatterns(hosts: string[]): string[] {
   return hosts.map((host) => `*://*.${host}/*`);
 }
 
 export function stripParams(url: URL, names: string[]): URL {
   for (const name of names) url.searchParams.delete(name);
+  return url;
+}
+
+export function keepParams(url: URL, names: string[]): URL {
+  for (const name of [...url.searchParams.keys()]) {
+    if (!names.includes(name)) url.searchParams.delete(name);
+  }
   return url;
 }
 
@@ -35,7 +42,7 @@ export function cleanUrl(raw: string, sites: Site[], onCleaned?: OnCleaned): str
   if (!site) return raw;
 
   const cleaned = site.clean(new URL(url)).href;
-  // `href` normalise l'URL : on ne touche au texte que si le nettoyage a changé quelque chose.
+  // `href` normalizes the URL: only touch the text if cleaning actually changed something.
   if (cleaned === url.href) return raw;
 
   onCleaned?.(raw, cleaned, site);

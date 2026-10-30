@@ -8,7 +8,7 @@ export default defineConfig({
     permissions: ['storage'],
     browser_specific_settings: {
       gecko: {
-        id: 'x-clear-urls@example.org',
+        id: 'x-clear-urls@smbpunt.github.io',
         data_collection_permissions: {
           required: ['none'],
         },

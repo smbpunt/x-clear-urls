@@ -1,7 +1,7 @@
 /**
- * Signalement d'un lien nettoyé, du monde MAIN jusqu'au background :
- * content script MAIN → CustomEvent → bridge (monde isolé) → runtime message → background.
- * Le payload circule en JSON : seules les chaînes traversent proprement les mondes (Xray de Firefox).
+ * Report of a cleaned link, from the MAIN world to the background:
+ * MAIN content script → CustomEvent → bridge (isolated world) → runtime message → background.
+ * The payload travels as JSON: only strings cross worlds cleanly (Firefox Xray vision).
  */
 export const CLEANED_EVENT = 'x-clear-urls:cleaned';
 
@@ -11,7 +11,7 @@ export interface CleanedReport {
   cleaned: string;
 }
 
-/** Le payload vient de la page, qui peut le falsifier : on le valide avant de l'enregistrer. */
+/** The payload comes from the page, which can forge it: validate it before storing. */
 export function parseReport(raw: unknown): CleanedReport | null {
   if (typeof raw !== 'string') return null;
   try {

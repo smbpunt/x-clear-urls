@@ -1,21 +1,22 @@
+/** A supported site, compiled from its entry in `rules.ts`. */
 export interface Site {
-  /** Identifiant stable, utilisé dans les logs. */
+  /** Stable identifier, stored in the history. */
   id: string;
-  /** Nom affiché dans l'interface. */
+  /** Name shown in the popup. */
   name: string;
-  /** Domaines couverts, sous-domaines inclus (ex. `youtube.com` couvre `m.youtube.com`). */
+  /** Covered domains, subdomains included (`youtube.com` also covers `m.youtube.com`). */
   hosts: string[];
-  /** Nettoie une URL de ce site. Reçoit une copie, qui peut être modifiée en place. */
+  /** Cleans a URL of this site. Receives a copy, which may be modified in place. */
   clean: (url: URL) => URL;
-  /** Comportements installés sur les pages de ce site. */
+  /** Behaviors installed on this site's pages. */
   handlers: Handler[];
 }
 
 export interface HandlerContext {
   site: Site;
-  /** Nettoie toutes les URLs connues (tous sites confondus) contenues dans un texte. */
+  /** Cleans every known URL (from any supported site) found in a text. */
   cleanText: (text: string) => string;
 }
 
-/** S'exécute dans le contexte JS de la page (monde MAIN), au `document_start`. */
+/** Runs in the page's JS context (MAIN world), at `document_start`. */
 export type Handler = (ctx: HandlerContext) => void;

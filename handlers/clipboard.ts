@@ -1,15 +1,15 @@
 import type { Handler } from '@/core/types';
 
 /**
- * Nettoie ce que la page met dans le presse-papier :
- * - boutons « Copier le lien » (`navigator.clipboard.writeText`) ;
- * - copie asynchrone (`navigator.clipboard.write` + `ClipboardItem`), utilisée quand le lien
- *   est obtenu par une requête avant la copie (ex. jeton de partage `?a=` de X connecté) ;
- * - handlers `copy` de la page (`clipboardData.setData`) ;
- * - copie native d'une sélection (Ctrl+C).
+ * Cleans what the page puts in the clipboard:
+ * - "Copy link" buttons (`navigator.clipboard.writeText`);
+ * - async copy (`navigator.clipboard.write` + `ClipboardItem`), used when the link is
+ *   fetched before being copied (e.g. X's `?a=` share token when logged in);
+ * - the page's `copy` handlers (`clipboardData.setData`);
+ * - native copy of a selection (Ctrl+C).
  */
 export const clipboard: Handler = ({ cleanText }) => {
-  // Patch du prototype : couvre aussi les références à la méthode capturées par la page.
+  // Patching the prototype also covers references to the method captured by the page.
   if (typeof Clipboard !== 'undefined') {
     const { writeText, write } = Clipboard.prototype;
 
@@ -40,7 +40,7 @@ export const clipboard: Handler = ({ cleanText }) => {
   );
 };
 
-// Le contenu reste une promesse : `write()` est appelé de façon synchrone et garde l'activation utilisateur.
+// Content stays a promise: `write()` is called synchronously and keeps the user activation.
 function cleanItem(item: ClipboardItem, cleanText: (text: string) => string): ClipboardItem {
   const data = Object.fromEntries(
     item.types.map((type) => [
@@ -58,7 +58,7 @@ function cleanItem(item: ClipboardItem, cleanText: (text: string) => string): Cl
 
 function selectedText(): string {
   const el = document.activeElement;
-  // Firefox ne renvoie pas la sélection d'un champ via getSelection().
+  // Firefox does not return a form field's selection through getSelection().
   if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
     return el.value.slice(el.selectionStart ?? 0, el.selectionEnd ?? 0);
   }
