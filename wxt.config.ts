@@ -5,6 +5,7 @@ export default defineConfig({
   manifestVersion: 3,
   manifest: {
     name: 'X-Clear-URLs',
+    permissions: ['storage'],
     browser_specific_settings: {
       gecko: {
         id: 'x-clear-urls@example.org',

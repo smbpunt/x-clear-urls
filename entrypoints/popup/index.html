@@ -1,13 +1,32 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Default Popup Title</title>
+    <title>X-Clear-URLs</title>
     <meta name="manifest.type" content="browser_action" />
   </head>
   <body>
-    <div id="app"></div>
+    <header class="header">
+      <h1 class="title">X-Clear-URLs</h1>
+      <div class="counter">
+        <span class="counter-value" id="count">0</span>
+        <span class="counter-label" id="count-label">liens nettoyés</span>
+      </div>
+    </header>
+
+    <section class="history">
+      <div class="history-head">
+        <h2>Historique</h2>
+        <button type="button" class="link-button" id="clear" hidden>Effacer</button>
+      </div>
+      <ol class="entries" id="entries"></ol>
+      <p class="empty" id="empty" hidden>
+        Aucun lien nettoyé pour l'instant.<br />
+        Copie un lien sur X ou YouTube pour commencer.
+      </p>
+    </section>
+
     <script type="module" src="./main.ts"></script>
   </body>
 </html>

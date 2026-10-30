@@ -1,84 +1,207 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --bg: #ffffff;
+  --surface: #f4f5f7;
+  --border: #e3e5e8;
+  --text: #16181c;
+  --muted: #687078;
+  --accent: #1d7a46;
+  --accent-soft: #e3f3e9;
+  --removed: #a1342b;
+  --removed-soft: #fbeae8;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  font: 13px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171a;
+    --surface: #1e2125;
+    --border: #2c3036;
+    --text: #e8eaed;
+    --muted: #9198a1;
+    --accent: #5cc98a;
+    --accent-soft: #1b3326;
+    --removed: #f08a80;
+    --removed-soft: #3a2220;
+  }
 }
-a:hover {
-  color: #535bf2;
+
+* {
+  box-sizing: border-box;
 }
 
 body {
+  width: 380px;
   margin: 0;
+  background: var(--bg);
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+.header {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
 }
 
-h1 {
-  font-size: 3.2em;
+.title {
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.counter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.counter-value {
+  font-size: 20px;
+  font-weight: 700;
   line-height: 1.1;
+  font-variant-numeric: tabular-nums;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.counter-label {
+  font-size: 11px;
 }
 
-.card {
-  padding: 2em;
+.history-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 8px;
 }
 
-.read-the-docs {
-  color: #888;
+.history-head h2 {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.entries {
+  max-height: 420px;
+  margin: 0;
+  padding: 0 8px 8px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 8px;
+}
+
+.entry + .entry {
+  border-top: 1px solid var(--border);
+}
+
+.entry:hover {
+  background: var(--surface);
+}
+
+.entry-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.entry-meta {
+  display: flex;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.entry-site {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.entry-meta > * + *::before {
+  content: '·';
+  margin-right: 6px;
+}
+
+.entry-url {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.entry-url:hover {
+  text-decoration: underline;
+}
+
+.entry-removed {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.param {
+  padding: 1px 6px;
+  border-radius: 4px;
+  font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--removed);
+  background: var(--removed-soft);
+  text-decoration: line-through;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  font: inherit;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.copy {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.copy:hover {
+  border-color: var(--muted);
+}
+
+.link-button {
+  padding: 0;
+  border: 0;
+  font-size: 12px;
+  color: var(--muted);
+  background: none;
+}
+
+.link-button:hover {
+  color: var(--removed);
+}
+
+.empty {
+  margin: 0;
+  padding: 24px 16px 32px;
+  text-align: center;
+  color: var(--muted);
 }
